@@ -72,7 +72,16 @@ class conditional_independence():
         ###########################################################################
         # TODO: Implement the function.                                           #
         ###########################################################################
-        pass
+        for x in self.X:
+            for y in self.Y:
+                for c in self.C:
+                    x_y_c = self.X_Y_C[(x, y, c)]
+                    x_c = self.X_C[(x, c)]
+                    y_c = self.Y_C[(y, c)]
+                    if x_y_c is not None and x_c is not None and y_c is not None:
+                        if x_y_c != x_c * y_c:
+                            return False
+        return True
         ###########################################################################
         #                             END OF YOUR CODE                            #
         ###########################################################################
