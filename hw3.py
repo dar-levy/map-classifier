@@ -117,15 +117,10 @@ def get_poisson_log_likelihoods(samples, rates):
     ###########################################################################
     # TODO: Implement the function.                                           #
     ###########################################################################
-    # Creating an array that will contain the log likelihood value of rates[i]
     likelihoods = np.zeros(len(rates))
 
-    # Loop that going over the sampels and rates and calculate that log-likelihood value of rates[i].
     for i, rate in enumerate(rates):
-        log_likelihood = 0
-        for k in samples:
-            log_likelihood += poisson_log_pmf(k, rate)
-        likelihoods[i] = log_likelihood
+        likelihoods[i] = sum(poisson_log_pmf(k, rate) for k in samples)
     ###########################################################################
     #                             END OF YOUR CODE                            #
     ###########################################################################
