@@ -43,7 +43,7 @@ class conditional_independence():
 
     def is_X_Y_dependent(self):
         """
-        return True iff X and Y are depndendent
+        return True iff X and Y are dependent
         """
         X = self.X
         Y = self.Y
@@ -52,7 +52,7 @@ class conditional_independence():
         # TODO: Implement the function.                                           #
         ###########################################################################
         for x, y in X_Y.keys():
-            if X[x] * Y[x] == X_Y[(x, y)]:
+            if X_Y[(x, y)] == X[x] * Y[x]:
                 return False
         return True
         ###########################################################################
@@ -61,7 +61,7 @@ class conditional_independence():
 
     def is_X_Y_given_C_independent(self):
         """
-        return True iff X_given_C and Y_given_C are indepndendent
+        return True iff X_given_C and Y_given_C are independent
         """
         X = self.X
         Y = self.Y
@@ -72,12 +72,12 @@ class conditional_independence():
         ###########################################################################
         # TODO: Implement the function.                                           #
         ###########################################################################
-        for x in self.X:
-            for y in self.Y:
-                for c in self.C:
-                    x_y_c = self.X_Y_C[(x, y, c)]
-                    x_c = self.X_C[(x, c)]
-                    y_c = self.Y_C[(y, c)]
+        for x in X:
+            for y in Y:
+                for c in C:
+                    x_y_c = X_Y_C[(x, y, c)]
+                    x_c = X_C[(x, c)]
+                    y_c = Y_C[(y, c)]
                     if x_y_c is not None and x_c is not None and y_c is not None:
                         if x_y_c != x_c * y_c:
                             return False
@@ -97,7 +97,14 @@ def poisson_log_pmf(k, rate):
     ###########################################################################
     # TODO: Implement the function.                                           #
     ###########################################################################
-    pass
+    # Creating a variables for the calculation of the log pmf.
+    lambda_pow = rate ** k
+    e_pow = np.exp(-rate)
+    _k = np.math.factorial(k)
+
+    # The calculation.
+    log_p = np.log((lambda_pow * e_pow) / _k)
+    return log_p
     ###########################################################################
     #                             END OF YOUR CODE                            #
     ###########################################################################
