@@ -98,14 +98,11 @@ def poisson_log_pmf(k, rate):
     ###########################################################################
     # TODO: Implement the function.                                           #
     ###########################################################################
-    # Creating a variables for the calculation of the log pmf.
     lambda_pow = rate ** k
     e_pow = np.exp(-rate)
     _k = np.math.factorial(k)
 
-    # The calculation.
     log_p = np.log((lambda_pow * e_pow) / _k)
-    return log_p
     ###########################################################################
     #                             END OF YOUR CODE                            #
     ###########################################################################
@@ -122,7 +119,15 @@ def get_poisson_log_likelihoods(samples, rates):
     ###########################################################################
     # TODO: Implement the function.                                           #
     ###########################################################################
-    pass
+    # Creating an array that will contain the log likelihood value of rates[i]
+    likelihoods = np.zeros(len(rates))
+
+    # Loop that going over the sampels and rates and calculate that log-likelihood value of rates[i].
+    for i, rate in enumerate(rates):
+        log_likelihood = 0
+        for k in samples:
+            log_likelihood += poisson_log_pmf(k, rate)
+        likelihoods[i] = log_likelihood
     ###########################################################################
     #                             END OF YOUR CODE                            #
     ###########################################################################
