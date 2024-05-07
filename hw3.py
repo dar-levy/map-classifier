@@ -72,15 +72,13 @@ class conditional_independence():
         ###########################################################################
         # TODO: Implement the function.                                           #
         ###########################################################################
-        for x in X:
-            for y in Y:
-                for c in C:
-                    x_y_c = X_Y_C[(x, y, c)]
-                    x_c = X_C[(x, c)]
-                    y_c = Y_C[(y, c)]
-                    if x_y_c is not None and x_c is not None and y_c is not None:
-                        if x_y_c != x_c * y_c:
-                            return False
+        for (x, y, c), P_x_y_c in X_Y_C.items():
+            P_x_c = X_C.get((x, c), 0)
+            P_y_c = Y_C.get((y, c), 0)
+
+            if P_x_y_c != P_x_c * P_y_c:
+                return False
+
         return True
         ###########################################################################
         #                             END OF YOUR CODE                            #
