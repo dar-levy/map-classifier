@@ -1,3 +1,5 @@
+import math
+
 import numpy as np
 
 class conditional_independence():
@@ -10,36 +12,39 @@ class conditional_independence():
         self.C = {0: 0.5, 1: 0.5}  # P(C=c)
 
         self.X_Y = {
-            (0, 0): 0.15,
+            (0, 0): 0.15,  # These should sum to P(X=0)
             (0, 1): 0.15,
-            (1, 0): 0.2,
-            (1, 1): 0.5
-        }  # P(X=x, Y=y)
+            (1, 0): 0.15,
+            (1, 1): 0.55
+        } # P(X=x, Y=y)
 
+        # Define P(X, C) and P(Y, C) based on some assumptions of interaction
         self.X_C = {
-            (0, 0): 0.15,
-            (0, 1): 0.15,
-            (1, 0): 0.35,
-            (1, 1): 0.35
-        }  # P(X=x, C=y)
+            (0, 0): 0.18,  # These should sum to P(X=0)
+            (0, 1): 0.12,
+            (1, 0): 0.32,
+            (1, 1): 0.38
+        }  #P(X=x, C=y)
+
 
         self.Y_C = {
-            (0, 0): 0.15,
-            (0, 1): 0.15,
-            (1, 0): 0.35,
-            (1, 1): 0.35
-        }  # P(Y=y, C=c)
+            (0, 0): 0.16,  # These should sum to P(Y=0)
+            (0, 1): 0.14,
+            (1, 0): 0.34,
+            (1, 1): 0.36
+        } #P(Y=y, C=c)
 
+        # Assume conditional independence to set P(X, Y, C)
         self.X_Y_C = {
-            (0, 0, 0): 0.045,
-            (0, 0, 1): 0.045,
-            (0, 1, 0): 0.105,
-            (0, 1, 1): 0.105,
-            (1, 0, 0): 0.105,
-            (1, 0, 1): 0.105,
-            (1, 1, 0): 0.245,
-            (1, 1, 1): 0.245,
-        }  # P(X=x, Y=y, C=c)
+            (0, 0, 0): 0.09,  # P(X=0, C=0) * P(Y=0, C=0) / P(C=0)
+            (0, 0, 1): 0.06,
+            (0, 1, 0): 0.09,
+            (0, 1, 1): 0.06,
+            (1, 0, 0): 0.07,
+            (1, 0, 1): 0.08,
+            (1, 1, 0): 0.25,
+            (1, 1, 1): 0.30
+        } # P(X=x, Y=y, C=c)
 
     def is_X_Y_dependent(self):
         """
@@ -95,14 +100,7 @@ def poisson_log_pmf(k, rate):
     ###########################################################################
     # TODO: Implement the function.                                           #
     ###########################################################################
-    # Creating a variables for the calculation of the log pmf.
-    lambda_pow = rate ** k
-    e_pow = np.exp(-rate)
-    _k = np.math.factorial(k)
-
-    # The calculation.
-    log_p = np.log((lambda_pow * e_pow) / _k)
-    return log_p
+    log_p = np.log(((rate ** k) * (math.e ** (-rate))) / (math.factorial(k)))
     ###########################################################################
     #                             END OF YOUR CODE                            #
     ###########################################################################
@@ -119,7 +117,10 @@ def get_poisson_log_likelihoods(samples, rates):
     ###########################################################################
     # TODO: Implement the function.                                           #
     ###########################################################################
-    pass
+    likelihoods = np.zeros(len(rates))
+
+    for i, rate in enumerate(rates):
+        likelihoods[i] = sum(poisson_log_pmf(k, rate) for k in samples)
     ###########################################################################
     #                             END OF YOUR CODE                            #
     ###########################################################################
@@ -137,7 +138,7 @@ def possion_iterative_mle(samples, rates):
     ###########################################################################
     # TODO: Implement the function.                                           #
     ###########################################################################
-    pass
+    rate = rates[np.argmax(likelihoods)]
     ###########################################################################
     #                             END OF YOUR CODE                            #
     ###########################################################################
@@ -153,7 +154,7 @@ def possion_analytic_mle(samples):
     ###########################################################################
     # TODO: Implement the function.                                           #
     ###########################################################################
-    pass
+    mean = np.mean(samples)
     ###########################################################################
     #                             END OF YOUR CODE                            #
     ###########################################################################
