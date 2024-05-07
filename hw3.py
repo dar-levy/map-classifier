@@ -10,40 +10,40 @@ class conditional_independence():
         self.C = {0: 0.5, 1: 0.5}  # P(C=c)
 
         self.X_Y = {
-            (0, 0): None,
-            (0, 1): None,
-            (1, 0): None,
-            (1, 1): None
+            (0, 0): 0.15,
+            (0, 1): 0.15,
+            (1, 0): 0.2,
+            (1, 1): 0.5
         }  # P(X=x, Y=y)
 
         self.X_C = {
-            (0, 0): None,
-            (0, 1): None,
-            (1, 0): None,
-            (1, 1): None
+            (0, 0): 0.15,
+            (0, 1): 0.15,
+            (1, 0): 0.35,
+            (1, 1): 0.35
         }  # P(X=x, C=y)
 
         self.Y_C = {
-            (0, 0): None,
-            (0, 1): None,
-            (1, 0): None,
-            (1, 1): None
+            (0, 0): 0.15,
+            (0, 1): 0.15,
+            (1, 0): 0.35,
+            (1, 1): 0.35
         }  # P(Y=y, C=c)
 
         self.X_Y_C = {
-            (0, 0, 0): None,
-            (0, 0, 1): None,
-            (0, 1, 0): None,
-            (0, 1, 1): None,
-            (1, 0, 0): None,
-            (1, 0, 1): None,
-            (1, 1, 0): None,
-            (1, 1, 1): None,
+            (0, 0, 0): 0.045,
+            (0, 0, 1): 0.045,
+            (0, 1, 0): 0.105,
+            (0, 1, 1): 0.105,
+            (1, 0, 0): 0.105,
+            (1, 0, 1): 0.105,
+            (1, 1, 0): 0.245,
+            (1, 1, 1): 0.245,
         }  # P(X=x, Y=y, C=c)
 
     def is_X_Y_dependent(self):
         """
-        return True iff X and Y are depndendent
+        return True iff X and Y are dependent
         """
         X = self.X
         Y = self.Y
@@ -51,14 +51,17 @@ class conditional_independence():
         ###########################################################################
         # TODO: Implement the function.                                           #
         ###########################################################################
-        pass
+        for x, y in X_Y.keys():
+            if X_Y[(x, y)] == X[x] * Y[x]:
+                return False
+        return True
         ###########################################################################
         #                             END OF YOUR CODE                            #
         ###########################################################################
 
     def is_X_Y_given_C_independent(self):
         """
-        return True iff X_given_C and Y_given_C are indepndendent
+        return True iff X_given_C and Y_given_C are independent
         """
         X = self.X
         Y = self.Y
@@ -69,7 +72,14 @@ class conditional_independence():
         ###########################################################################
         # TODO: Implement the function.                                           #
         ###########################################################################
-        pass
+        for (x, y, c), P_x_y_c in X_Y_C.items():
+            P_x_c = X_C.get((x, c), 0)
+            P_y_c = Y_C.get((y, c), 0)
+
+            if P_x_y_c != P_x_c * P_y_c:
+                return False
+
+        return True
         ###########################################################################
         #                             END OF YOUR CODE                            #
         ###########################################################################
@@ -85,7 +95,14 @@ def poisson_log_pmf(k, rate):
     ###########################################################################
     # TODO: Implement the function.                                           #
     ###########################################################################
-    pass
+    # Creating a variables for the calculation of the log pmf.
+    lambda_pow = rate ** k
+    e_pow = np.exp(-rate)
+    _k = np.math.factorial(k)
+
+    # The calculation.
+    log_p = np.log((lambda_pow * e_pow) / _k)
+    return log_p
     ###########################################################################
     #                             END OF YOUR CODE                            #
     ###########################################################################
