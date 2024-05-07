@@ -162,7 +162,7 @@ def possion_analytic_mle(samples):
 
 def normal_pdf(x, mean, std):
     """
-    Calculate normal desnity function for a given x, mean and standrad deviation.
+    Calculate normal density function for a given x, mean and standard deviation.
  
     Input:
     - x: A value we want to compute the distribution for.
@@ -175,7 +175,11 @@ def normal_pdf(x, mean, std):
     ###########################################################################
     # TODO: Implement the function.                                           #
     ###########################################################################
-    pass
+    variance = std ** 2
+    normalization_factor = 1 / np.sqrt(2 * np.pi * variance)
+    exponent = -((x - mean) ** 2) / (2 * variance)
+
+    p = normalization_factor * (math.e ** exponent)
     ###########################################################################
     #                             END OF YOUR CODE                            #
     ###########################################################################
@@ -184,7 +188,7 @@ def normal_pdf(x, mean, std):
 class NaiveNormalClassDistribution():
     def __init__(self, dataset, class_value):
         """
-        A class which encapsulates the relevant parameters(mean, std) for a class conditinoal normal distribution.
+        A class which encapsulates the relevant parameters(mean, std) for a class conditional normal distribution.
         The mean and std are computed from a given data set.
         
         Input
