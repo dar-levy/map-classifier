@@ -620,7 +620,9 @@ class MAPClassifier_DNB():
         ###########################################################################
         # TODO: Implement the function.                                           #
         ###########################################################################
-        pass
+        ccd0_posterior = self.ccd0.get_instance_posterior(x)
+        ccd1_posterior = self.ccd1.get_instance_posterior(x)
+        pred = 0 if ccd0_posterior > ccd1_posterior else 1
         ###########################################################################
         #                             END OF YOUR CODE                            #
         ###########################################################################
