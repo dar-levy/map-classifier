@@ -415,7 +415,9 @@ class MultiNormalClassDistribution():
         ###########################################################################
         # TODO: Implement the function.                                           #
         ###########################################################################
-        pass
+        prior = self.get_prior()
+        likelihood = self.get_instance_likelihood(x)
+        posterior = prior * likelihood
         ###########################################################################
         #                             END OF YOUR CODE                            #
         ###########################################################################
