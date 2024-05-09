@@ -358,7 +358,7 @@ class MultiNormalClassDistribution():
 
     def __init__(self, dataset, class_value):
         """
-        A class which encapsulate the relevant parameters(mean, cov matrix) for a class conditinoal multi normal distribution.
+        A class which encapsulate the relevant parameters(mean, cov matrix) for a class conditional multi normal distribution.
         The mean and cov matrix (You can use np.cov for this!) will be computed from a given data set.
         
         Input
@@ -368,7 +368,10 @@ class MultiNormalClassDistribution():
         ###########################################################################
         # TODO: Implement the function.                                           #
         ###########################################################################
-        pass
+        self.data = np.copy(dataset)
+        self.class_instances = dataset[dataset[:, -1] == class_value][:, :-1]
+        self.mean = np.mean(self.class_instances, axis=0)
+        self.cov = np.cov(self.class_instances.T)
         ###########################################################################
         #                             END OF YOUR CODE                            #
         ###########################################################################
