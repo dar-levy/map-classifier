@@ -552,7 +552,17 @@ class DiscreteNBClassDistribution():
         ###########################################################################
         # TODO: Implement the function.                                           #
         ###########################################################################
-        pass
+        likelihood = 1.0
+        n_i = len(self.class_instances)
+
+        for feature_index, feature_values in enumerate(self.class_instances.T):
+            Vj = len(set(feature_values))
+            n_ij = (feature_values == x[feature_index]).sum()
+
+            if n_i + Vj != 0:
+                likelihood *= (n_ij + 1) / (n_i + Vj)
+            else:
+                likelihood *= (n_ij + 1) / (n_i + Vj + EPSILLON)
         ###########################################################################
         #                             END OF YOUR CODE                            #
         ###########################################################################
