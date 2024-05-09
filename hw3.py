@@ -224,13 +224,13 @@ class NaiveNormalClassDistribution():
     
     def get_instance_likelihood(self, x):
         """
-        Returns the likelihhod porbability of the instance under the class according to the dataset distribution.
+        Returns the likelihood probability of the instance under the class according to the dataset distribution.
         """
         likelihood = None
         ###########################################################################
         # TODO: Implement the function.                                           #
         ###########################################################################
-        pass
+        likelihood = np.prod([normal_pdf(x[i], self.mean[i], self.std[i]) for i in range(len(x))])
         ###########################################################################
         #                             END OF YOUR CODE                            #
         ###########################################################################
