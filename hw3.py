@@ -437,7 +437,8 @@ class MaxPrior():
         ###########################################################################
         # TODO: Implement the function.                                           #
         ###########################################################################
-        pass
+        self.ccd0 = ccd0
+        self.ccd1 = ccd1
         ###########################################################################
         #                             END OF YOUR CODE                            #
         ###########################################################################
@@ -455,14 +456,16 @@ class MaxPrior():
         ###########################################################################
         # TODO: Implement the function.                                           #
         ###########################################################################
-        pass
+        ccd0_prior = self.ccd0.get_prior()
+        ccd1_prior = self.ccd1.get_prior()
+        pred = 0 if ccd0_prior > ccd1_prior else 1
         ###########################################################################
         #                             END OF YOUR CODE                            #
         ###########################################################################
         return pred
 
 class MaxLikelihood():
-    def __init__(self, ccd0 , ccd1):
+    def __init__(self, ccd0, ccd1):
         """
         A Maximum Likelihood classifier. 
         This class will hold 2 class distributions, one for class 0 and one for class 1, and will predicit an instance
@@ -475,7 +478,8 @@ class MaxLikelihood():
         ###########################################################################
         # TODO: Implement the function.                                           #
         ###########################################################################
-        pass
+        self.ccd0 = ccd0
+        self.ccd1 = ccd1
         ###########################################################################
         #                             END OF YOUR CODE                            #
         ###########################################################################
@@ -493,7 +497,9 @@ class MaxLikelihood():
         ###########################################################################
         # TODO: Implement the function.                                           #
         ###########################################################################
-        pass
+        ccd0_likelihood = np.prod(self.ccd0.get_instance_likelihood(x))
+        ccd1_likelihood = np.prod(self.ccd1.get_instance_likelihood(x))
+        pred = 0 if ccd0_likelihood > ccd1_likelihood else 1
         ###########################################################################
         #                             END OF YOUR CODE                            #
         ###########################################################################
