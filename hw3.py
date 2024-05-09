@@ -347,8 +347,6 @@ def multi_normal_pdf(x, mean, cov):
     inversed_covariance = np.linalg.inv(cov)
     deviation_vector = x - mean
     exponent_term = -0.5 * np.dot(deviation_vector.T, np.dot(inversed_covariance, deviation_vector))
-
-    # Multi-variable normal distribution PDF calculation
     normalization_constant = 1.0 / (np.sqrt((2 * np.pi) ** dimension * covariance_det))
     pdf = normalization_constant * np.exp(exponent_term)
     ###########################################################################
