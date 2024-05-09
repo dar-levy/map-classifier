@@ -198,14 +198,17 @@ class NaiveNormalClassDistribution():
         ###########################################################################
         # TODO: Implement the function.                                           #
         ###########################################################################
-        pass
+        self.data = np.copy(dataset)
+        self.class_data = dataset[dataset[:, -1] == class_value][:, :-1]
+        self.mean = np.mean(self.class_data, axis=0)
+        self.std = np.std(self.class_data, axis=0)
         ###########################################################################
         #                             END OF YOUR CODE                            #
         ###########################################################################
     
     def get_prior(self):
         """
-        Returns the prior porbability of the class according to the dataset distribution.
+        Returns the prior probability of the class according to the dataset distribution.
         """
         prior = None
         ###########################################################################
