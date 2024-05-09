@@ -235,17 +235,19 @@ class NaiveNormalClassDistribution():
         #                             END OF YOUR CODE                            #
         ###########################################################################
         return likelihood
-    
+
     def get_instance_posterior(self, x):
         """
-        Returns the posterior porbability of the instance under the class according to the dataset distribution.
+        Returns the posterior probability of the instance under the class according to the dataset distribution.
         * Ignoring p(x)
         """
         posterior = None
         ###########################################################################
         # TODO: Implement the function.                                           #
         ###########################################################################
-        pass
+        prior = self.get_prior()
+        likelihood = self.get_instance_likelihood(x)
+        posterior = likelihood * prior
         ###########################################################################
         #                             END OF YOUR CODE                            #
         ###########################################################################
