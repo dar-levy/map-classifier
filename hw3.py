@@ -199,9 +199,9 @@ class NaiveNormalClassDistribution():
         # TODO: Implement the function.                                           #
         ###########################################################################
         self.data = np.copy(dataset)
-        self.class_data = dataset[dataset[:, -1] == class_value][:, :-1]
-        self.mean = np.mean(self.class_data, axis=0)
-        self.std = np.std(self.class_data, axis=0)
+        self.class_instances = dataset[dataset[:, -1] == class_value][:, :-1]
+        self.mean = np.mean(self.class_instances, axis=0)
+        self.std = np.std(self.class_instances, axis=0)
         ###########################################################################
         #                             END OF YOUR CODE                            #
         ###########################################################################
@@ -214,7 +214,9 @@ class NaiveNormalClassDistribution():
         ###########################################################################
         # TODO: Implement the function.                                           #
         ###########################################################################
-        pass
+        class_instances_count = len(self.class_instances)
+        total_instances_count = len(self.data)
+        prior = class_instances_count / total_instances_count
         ###########################################################################
         #                             END OF YOUR CODE                            #
         ###########################################################################
