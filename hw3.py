@@ -384,7 +384,9 @@ class MultiNormalClassDistribution():
         ###########################################################################
         # TODO: Implement the function.                                           #
         ###########################################################################
-        pass
+        class_instances_count = len(self.class_instances)
+        total_instances_count = len(self.data)
+        prior = class_instances_count / total_instances_count
         ###########################################################################
         #                             END OF YOUR CODE                            #
         ###########################################################################
