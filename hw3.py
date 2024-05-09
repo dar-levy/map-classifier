@@ -520,7 +520,8 @@ class DiscreteNBClassDistribution():
         ###########################################################################
         # TODO: Implement the function.                                           #
         ###########################################################################
-        pass
+        self.data = np.copy(dataset)
+        self.class_instances = dataset[dataset[:, -1] == class_value][:, :-1]
         ###########################################################################
         #                             END OF YOUR CODE                            #
         ###########################################################################
@@ -534,7 +535,9 @@ class DiscreteNBClassDistribution():
         ###########################################################################
         # TODO: Implement the function.                                           #
         ###########################################################################
-        pass
+        class_instances_count = len(self.class_instances)
+        total_instances_count = len(self.data)
+        prior = class_instances_count / total_instances_count
         ###########################################################################
         #                             END OF YOUR CODE                            #
         ###########################################################################
@@ -549,7 +552,17 @@ class DiscreteNBClassDistribution():
         ###########################################################################
         # TODO: Implement the function.                                           #
         ###########################################################################
-        pass
+        likelihood = 1.0
+        n_i = len(self.class_instances)
+
+        for feature_index, feature_values in enumerate(self.class_instances.T):
+            Vj = len(set(feature_values))
+            n_ij = (feature_values == x[feature_index]).sum()
+
+            if n_i + Vj != 0:
+                likelihood *= (n_ij + 1) / (n_i + Vj)
+            else:
+                likelihood *= (n_ij + 1) / (n_i + Vj + EPSILLON)
         ###########################################################################
         #                             END OF YOUR CODE                            #
         ###########################################################################
@@ -565,7 +578,9 @@ class DiscreteNBClassDistribution():
         ###########################################################################
         # TODO: Implement the function.                                           #
         ###########################################################################
-        pass
+        prior = self.get_prior()
+        likelihood = self.get_instance_likelihood(x)
+        posterior = prior * likelihood
         ###########################################################################
         #                             END OF YOUR CODE                            #
         ###########################################################################
@@ -586,7 +601,8 @@ class MAPClassifier_DNB():
         ###########################################################################
         # TODO: Implement the function.                                           #
         ###########################################################################
-        pass
+        self.ccd0 = ccd0
+        self.ccd1 = ccd1
         ###########################################################################
         #                             END OF YOUR CODE                            #
         ###########################################################################
@@ -604,7 +620,9 @@ class MAPClassifier_DNB():
         ###########################################################################
         # TODO: Implement the function.                                           #
         ###########################################################################
-        pass
+        ccd0_posterior = self.ccd0.get_instance_posterior(x)
+        ccd1_posterior = self.ccd1.get_instance_posterior(x)
+        pred = 0 if ccd0_posterior > ccd1_posterior else 1
         ###########################################################################
         #                             END OF YOUR CODE                            #
         ###########################################################################
@@ -623,7 +641,15 @@ class MAPClassifier_DNB():
         ###########################################################################
         # TODO: Implement the function.                                           #
         ###########################################################################
-        pass
+        correctly_classified_count = 0
+        test_set_size = len(test_set)
+
+        for instance in test_set:
+            actual_class = instance[-1]
+            class_prediction = self.predict(instance[:-1])
+            correctly_classified_count += 1 if (class_prediction == actual_class) else 0
+
+        acc = correctly_classified_count / test_set_size
         ###########################################################################
         #                             END OF YOUR CODE                            #
         ###########################################################################
