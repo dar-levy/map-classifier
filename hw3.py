@@ -26,7 +26,6 @@ class conditional_independence():
             (1, 1): 0.38
         }  #P(X=x, C=y)
 
-
         self.Y_C = {
             (0, 0): 0.16,  # These should sum to P(Y=0)
             (0, 1): 0.14,
@@ -253,8 +252,9 @@ class NaiveNormalClassDistribution():
         ###########################################################################
         return posterior
 
+
 class MAPClassifier():
-    def __init__(self, ccd0 , ccd1):
+    def __init__(self, ccd0, ccd1):
         """
         A Maximum a posteriori classifier. 
         This class will hold 2 class distributions. 
@@ -298,15 +298,16 @@ class MAPClassifier():
         ###########################################################################
         return pred
 
+
 def compute_accuracy(test_set, map_classifier):
     """
     Compute the accuracy of a given a test_set using a MAP classifier object.
     
     Input
         - test_set: The test_set for which to compute the accuracy (Numpy array). where the class label is the last column
-        - map_classifier : A MAPClassifier object capable of prediciting the class for each instance in the testset.
+        - map_classifier : A MAPClassifier object capable of predicting the class for each instance in the testset.
         
-    Ouput
+    Output
         - Accuracy = #Correctly Classified / test_set size
     """
     acc = None
@@ -327,9 +328,10 @@ def compute_accuracy(test_set, map_classifier):
     ###########################################################################
     return acc
 
+
 def multi_normal_pdf(x, mean, cov):
     """
-    Calculate multi variable normal density function for a given x, mean and covarince matrix.
+    Calculate multi variable normal density function for a given x, mean and covariance matrix.
  
     Input:
     - x: A value we want to compute the distribution for.
@@ -424,7 +426,7 @@ class MultiNormalClassDistribution():
         return posterior
 
 class MaxPrior():
-    def __init__(self, ccd0 , ccd1):
+    def __init__(self, ccd0, ccd1):
         """
         A Maximum prior classifier. 
         This class will hold 2 class distributions, one for class 0 and one for class 1, and will predicit an instance
@@ -505,7 +507,9 @@ class MaxLikelihood():
         ###########################################################################
         return pred
 
+
 EPSILLON = 1e-6 # if a certain value only occurs in the test set, the probability for that value will be EPSILLON.
+
 
 class DiscreteNBClassDistribution():
     def __init__(self, dataset, class_value):
