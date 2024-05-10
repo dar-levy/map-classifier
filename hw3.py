@@ -561,7 +561,7 @@ class DiscreteNBClassDistribution():
 
         for feature_index, feature_values in enumerate(self.class_instances.T):
             Vj = len(set(feature_values))
-            n_ij = (feature_values == x[feature_index]).sum()
+            n_ij = np.sum(feature_values == x[feature_index])
 
             if n_i + Vj != 0:
                 likelihood *= (n_ij + 1) / (n_i + Vj)
