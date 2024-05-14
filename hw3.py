@@ -12,38 +12,36 @@ class conditional_independence():
         self.C = {0: 0.5, 1: 0.5}  # P(C=c)
 
         self.X_Y = {
-            (0, 0): 0.15,  # These should sum to P(X=0)
-            (0, 1): 0.15,
-            (1, 0): 0.15,
-            (1, 1): 0.55
-        } # P(X=x, Y=y)
+            (0, 0): 0.1,
+            (0, 1): 0.2,
+            (1, 0): 0.2,
+            (1, 1): 0.5,
+        }  # P(X=x, Y=y)
 
-        # Define P(X, C) and P(Y, C) based on some assumptions of interaction
         self.X_C = {
-            (0, 0): 0.18,  # These should sum to P(X=0)
-            (0, 1): 0.12,
-            (1, 0): 0.32,
-            (1, 1): 0.38
-        }  #P(X=x, C=y)
+            (0, 0): 0.1,
+            (0, 1): 0.2,
+            (1, 0): 0.4,
+            (1, 1): 0.3,
+        }  # P(X=x, C=y)
 
         self.Y_C = {
-            (0, 0): 0.16,  # These should sum to P(Y=0)
-            (0, 1): 0.14,
-            (1, 0): 0.34,
-            (1, 1): 0.36
-        } #P(Y=y, C=c)
+            (0, 0): 0.2,
+            (0, 1): 0.1,
+            (1, 0): 0.3,
+            (1, 1): 0.4,
+        }  # P(Y=y, C=c)
 
-        # Assume conditional independence to set P(X, Y, C)
         self.X_Y_C = {
-            (0, 0, 0): 0.09,  # P(X=0, C=0) * P(Y=0, C=0) / P(C=0)
-            (0, 0, 1): 0.06,
-            (0, 1, 0): 0.09,
-            (0, 1, 1): 0.06,
-            (1, 0, 0): 0.07,
-            (1, 0, 1): 0.08,
-            (1, 1, 0): 0.25,
-            (1, 1, 1): 0.30
-        } # P(X=x, Y=y, C=c)
+            (0, 0, 0): 0.04,
+            (0, 0, 1): 0.04,
+            (0, 1, 0): 0.06,
+            (0, 1, 1): 0.16,
+            (1, 0, 0): 0.16,
+            (1, 0, 1): 0.06,
+            (1, 1, 0): 0.24,
+            (1, 1, 1): 0.24,
+        }  # P(X=x, Y=y, C=c)
 
     def is_X_Y_dependent(self):
         """
@@ -79,8 +77,11 @@ class conditional_independence():
         for (x, y, c), P_x_y_c in X_Y_C.items():
             P_x_c = X_C.get((x, c), 0)
             P_y_c = Y_C.get((y, c), 0)
+            P_c = self.C.get(c, 0)
+            P_x_given_c = P_x_c / P_c
+            P_y_given_c = P_y_c / P_c
 
-            if P_x_y_c != P_x_c * P_y_c:
+            if abs(P_x_y_c - P_x_given_c * P_y_given_c * P_c) > EPSILLON:
                 return False
 
         return True
